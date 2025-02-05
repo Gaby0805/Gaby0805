@@ -1,0 +1,54 @@
+create table usuarios(
+	id_usuario serial primary key,
+	nome varchar(255),
+	email varchar(255),
+	senha varchar(255),
+	telefone varchar(100),
+	data criacao timestamp,
+	foto perfil varchar(255),
+	localizacao text
+);
+create table produtos (
+	id_produto serial primary key,
+	data_categoria timestamp,
+	categoria varchar(140),
+	estado varchar(255)
+	preco real,
+	foto varchar(255),
+	disponivel bool DEFAULT true,
+	descricao text,
+	usuario_id int,
+	foreign key (usuario_id) references usuarios(id_usuario)
+);
+create table anuncios(
+	id_anuncio serial primary key,
+	tipo varchar(250),
+	status bool, default true,
+	data_criacao timestamp,
+	produto_id int,
+	foreign key (produto_id) references produtos(id_produto)
+);
+
+create table transacao (
+	id_transicao serial primary key,
+	anuncio_id int,
+	comprador_id int,
+	vendedor_id int,
+	tipo varchar(255),
+	status bool default true,
+	data_criacao timestamp,
+	foreign key (anuncio_id) references anuncios(id_anuncio) 
+	foreign key (comprador_id) references usuarios(id_usuario)
+	foreign key (vendedor_Id) references usuarios(id_usuario)
+)
+create table menssagens(
+	id_menssagem serial primary key,
+	remetente_id,
+	destinatario_id,
+	anuncio_id,
+	menssagem text,
+	data_envio timestamp,
+	foreign key (anuncio_id) references anuncios(id_anuncio) 
+	foreign key (remetente_id) references usuarios(id_usuario)
+	foreign key (destinatario_id) references usuarios(id_usuario)
+)
